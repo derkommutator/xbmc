@@ -351,7 +351,9 @@ void CAdvancedSettings::Initialize()
   m_GLRectangleHack = false;
   m_iSkipLoopFilter = 0;
   m_bVirtualShares = true;
-  m_bTry10bitOutput = false;
+  m_bTry10bitOutput = true;
+  m_nvidia12bits = false;
+  m_autohdr = false;
 
   m_cpuTempCmd = "";
   m_gpuTempCmd = "";
@@ -885,6 +887,8 @@ void CAdvancedSettings::ParseSettingsFile(const std::string &file)
   XMLUtils::GetBoolean(pRootElement,"virtualshares", m_bVirtualShares);
   XMLUtils::GetUInt(pRootElement, "packagefoldersize", m_addonPackageFolderSize);
   XMLUtils::GetBoolean(pRootElement, "try10bitoutput", m_bTry10bitOutput);
+  XMLUtils::GetBoolean(pRootElement, "nvidia12bits", m_nvidia12bits);
+  XMLUtils::GetBoolean(pRootElement, "autohdr", m_autohdr);
 
   // EPG
   pElement = pRootElement->FirstChildElement("epg");

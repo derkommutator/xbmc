@@ -498,7 +498,7 @@ void CDVDInputStreamBluray::ProcessEvent() {
       m_title = disc_info->titles[m_event.param];
     else
       m_title = nullptr;
-    m_menu = false;
+      m_menu = false;
 
     break;
   }
@@ -518,6 +518,7 @@ void CDVDInputStreamBluray::ProcessEvent() {
 
   case BD_EVENT_CHAPTER:
     CLog::Log(LOGDEBUG, "CDVDInputStreamBluray - BD_EVENT_CHAPTER %d", m_event.param);
+	m_chapter = m_event.param;
     break;
 
     /* stream selection */
@@ -547,8 +548,11 @@ void CDVDInputStreamBluray::ProcessEvent() {
   case BD_EVENT_MENU:
     CLog::Log(LOGDEBUG, "CDVDInputStreamBluray - BD_EVENT_MENU %d",
         m_event.param);
-    m_menu = (m_event.param != 0);
-    break;
+      if (m_event.param == 1)
+        m_menu = true;
+      else
+        m_menu = false;
+      break;
 
   case BD_EVENT_IDLE:
     KODI::TIME::Sleep(100);
@@ -759,6 +763,10 @@ void CDVDInputStreamBluray::OverlayFlush(int64_t pts)
 
   m_player->OnDiscNavResult(static_cast<void*>(group), BD_EVENT_MENU_OVERLAY);
   group->Release();
+<<<<<<< HEAD
+=======
+//  m_menu = true;
+>>>>>>> e58036557d07e89085e016c2b8d38fa2f15d52e2
 #endif
 }
 
@@ -926,7 +934,7 @@ int CDVDInputStreamBluray::GetChapterCount()
 int CDVDInputStreamBluray::GetChapter()
 {
   if(m_titleInfo)
-    return static_cast<int>(bd_get_current_chapter(m_bd) + 1);
+    return static_cast<int>(m_chapter);
   else
     return 0;
 }
@@ -1109,7 +1117,11 @@ void CDVDInputStreamBluray::OnMenu()
 
   if(bd_user_input(m_bd, -1, BD_VK_POPUP) >= 0)
   {
+<<<<<<< HEAD
     m_menu = !m_menu;
+=======
+	m_menu = !m_menu;
+>>>>>>> e58036557d07e89085e016c2b8d38fa2f15d52e2
     return;
   }
   CLog::Log(LOGDEBUG, "CDVDInputStreamBluray::OnMenu - popup failed, trying root");
@@ -1164,15 +1176,11 @@ void CDVDInputStreamBluray::SetupPlayerSettings()
   }
   bd_set_player_setting(m_bd, BLURAY_PLAYER_SETTING_REGION_CODE, static_cast<uint32_t>(region));
   bd_set_player_setting(m_bd, BLURAY_PLAYER_SETTING_PARENTAL, 99);
-  bd_set_player_setting(m_bd, BLURAY_PLAYER_SETTING_3D_CAP, 0xffffffff);
-#if (BLURAY_VERSION >= BLURAY_VERSION_CODE(1, 0, 2))  
   bd_set_player_setting(m_bd, BLURAY_PLAYER_SETTING_PLAYER_PROFILE, BLURAY_PLAYER_PROFILE_6_v3_1);
+  bd_set_player_setting(m_bd, BLURAY_PLAYER_SETTING_3D_CAP, 0xffffffff);
   bd_set_player_setting(m_bd, BLURAY_PLAYER_SETTING_UHD_CAP, 0xffffffff);
   bd_set_player_setting(m_bd, BLURAY_PLAYER_SETTING_UHD_DISPLAY_CAP, 0xffffffff);
   bd_set_player_setting(m_bd, BLURAY_PLAYER_SETTING_HDR_PREFERENCE, 0xffffffff);
-#else
-  bd_set_player_setting(m_bd, BLURAY_PLAYER_SETTING_PLAYER_PROFILE, BLURAY_PLAYER_PROFILE_5_v2_4);
-#endif
 
   std::string langCode;
   g_LangCodeExpander.ConvertToISO6392T(g_langInfo.GetDVDAudioLanguage(), langCode);
