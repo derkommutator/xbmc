@@ -763,10 +763,7 @@ void CDVDInputStreamBluray::OverlayFlush(int64_t pts)
 
   m_player->OnDiscNavResult(static_cast<void*>(group), BD_EVENT_MENU_OVERLAY);
   group->Release();
-<<<<<<< HEAD
-=======
 //  m_menu = true;
->>>>>>> e58036557d07e89085e016c2b8d38fa2f15d52e2
 #endif
 }
 
@@ -1117,11 +1114,7 @@ void CDVDInputStreamBluray::OnMenu()
 
   if(bd_user_input(m_bd, -1, BD_VK_POPUP) >= 0)
   {
-<<<<<<< HEAD
-    m_menu = !m_menu;
-=======
 	m_menu = !m_menu;
->>>>>>> e58036557d07e89085e016c2b8d38fa2f15d52e2
     return;
   }
   CLog::Log(LOGDEBUG, "CDVDInputStreamBluray::OnMenu - popup failed, trying root");
