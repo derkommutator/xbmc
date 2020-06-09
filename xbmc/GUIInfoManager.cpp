@@ -495,14 +495,20 @@ const infomap integer_bools[] =  {{ "isequal",          INTEGER_IS_EQUAL },
 ///   }
 ///   \table_row3{   <b>`Player.Progress`</b>,
 ///                  \anchor Player_Progress
-///                  _integer_,
+///                  _integer_ / _string_,
 ///     @return The progress position as percentage.
+///     <p><hr>
+///     @skinning_v19 \link Player_Progress `Player.Progress`\endlink infolabel
+///     also exposed as a string.
 ///     <p>
 ///   }
 ///   \table_row3{   <b>`Player.ProgressCache`</b>,
 ///                  \anchor Player_ProgressCache
-///                  _integer_,
+///                  _integer_ / _string_,
 ///     @return How much of the file is cached above current play percentage
+///     <p><hr>
+///     @skinning_v19 \link Player_ProgressCache `Player.ProgressCache`\endlink
+///     infolabel also exposed as a string.
 ///     <p>
 ///   }
 ///   \table_row3{   <b>`Player.Volume`</b>,
@@ -1045,10 +1051,11 @@ const infomap weather[] =        {{ "isfetched",        WEATHER_IS_FETCHED },
 ///   \table_row3{   <b>`System.HasMediaAudioCD`</b>,
 ///                  \anchor System_HasMediaAudioCD
 ///                  _boolean_,
-///     @return **True** if there is an audio CD in the optical drive. **False** if no drive available\, empty drive or other medium.
+///     @return **True** if there is an audio CD in the optical drive. **False** if no drive
+///     available\, empty drive or other medium.
 ///   <p><hr>
-///   @skinning_v18 **[New Boolean Condition]** \link System_HasMediaAudioCD `System.HasMediaAudioCD` \endlink
-///   <p>
+///   @skinning_v18 **[New Boolean Condition]** \link System_HasMediaAudioCD
+///   `System.HasMediaAudioCD` \endlink <p>
 ///   }
 ///   \table_row3{   <b>`System.DVDReady`</b>,
 ///                  \anchor System_DVDReady
@@ -1123,8 +1130,8 @@ const infomap weather[] =        {{ "isfetched",        WEATHER_IS_FETCHED },
 ///     @return **True** if at least one pvr client addon is installed and enabled.
 ///     @param id - addon id of the PVR addon
 ///     <p><hr>
-///     @skinning_v17 **[New Boolean Condition]** \link System_HasPVRAddon `System.HasPVRAddon`\endlink
-///     <p>
+///     @skinning_v17 **[New Boolean Condition]** \link System_HasPVRAddon
+///     `System.HasPVRAddon`\endlink <p>
 ///   }
 ///   \table_row3{   <b>`System.HasCMS`</b>,
 ///                  \anchor System_HasCMS
@@ -1140,16 +1147,16 @@ const infomap weather[] =        {{ "isfetched",        WEATHER_IS_FETCHED },
 ///                  _boolean_,
 ///     @return **True** if a modal dialog is active.
 ///     <p><hr>
-///     @skinning_v18 **[New Boolean Condition]** \link System_HasActiveModalDialog `System.HasActiveModalDialog`\endlink
-///     <p>
+///     @skinning_v18 **[New Boolean Condition]** \link System_HasActiveModalDialog
+///     `System.HasActiveModalDialog`\endlink <p>
 ///   }
 ///   \table_row3{   <b>`System.HasVisibleModalDialog`</b>,
 ///                  \anchor System_HasVisibleModalDialog
 ///                  _boolean_,
 ///     @return **True** if a modal dialog is visible.
 ///     <p><hr>
-///     @skinning_v18 **[New Boolean Condition]** \link System_HasVisibleModalDialog `System.HasVisibleModalDialog`\endlink
-///     <p>
+///     @skinning_v18 **[New Boolean Condition]** \link System_HasVisibleModalDialog
+///     `System.HasVisibleModalDialog`\endlink <p>
 ///   }
 ///   \table_row3{   <b>`System.Platform.Linux`</b>,
 ///                  \anchor System_PlatformLinux
@@ -1162,8 +1169,8 @@ const infomap weather[] =        {{ "isfetched",        WEATHER_IS_FETCHED },
 ///                  _boolean_,
 ///     @return **True** if Kodi is running on a Raspberry Pi.
 ///     <p><hr>
-///     @skinning_v13 **[New Boolean Condition]** \link System_PlatformLinuxRaspberryPi `System.Platform.Linux.RaspberryPi`\endlink
-///     <p>
+///     @skinning_v13 **[New Boolean Condition]** \link System_PlatformLinuxRaspberryPi
+///     `System.Platform.Linux.RaspberryPi`\endlink <p>
 ///   }
 ///   \table_row3{   <b>`System.Platform.Windows`</b>,
 ///                  \anchor System_PlatformWindows
@@ -1176,8 +1183,8 @@ const infomap weather[] =        {{ "isfetched",        WEATHER_IS_FETCHED },
 ///                  _boolean_,
 ///     @return **True** if Kodi is running on Universal Windows Platform (UWP).
 ///     <p><hr>
-///     @skinning_v18 **[New Boolean Condition]** \link System_PlatformUWP `System.Platform.UWP`\endlink
-///     <p>
+///     @skinning_v18 **[New Boolean Condition]** \link System_PlatformUWP
+///     `System.Platform.UWP`\endlink <p>
 ///   }
 ///   \table_row3{   <b>`System.Platform.OSX`</b>,
 ///                  \anchor System_PlatformOSX
@@ -1196,8 +1203,8 @@ const infomap weather[] =        {{ "isfetched",        WEATHER_IS_FETCHED },
 ///                  _boolean_,
 ///     @return **True** if Kodi is running on a tvOS device.
 ///     <p><hr>
-///     @skinning_v19 **[New Boolean Condition]** \link System_PlatformTVOS `System.Platform.TVOS`\endlink
-///     <p>
+///     @skinning_v19 **[New Boolean Condition]** \link System_PlatformTVOS
+///     `System.Platform.TVOS`\endlink <p>
 ///   }
 ///   \table_row3{   <b>`System.Platform.Darwin`</b>,
 ///                  \anchor System_PlatformDarwin
@@ -1235,8 +1242,8 @@ const infomap weather[] =        {{ "isfetched",        WEATHER_IS_FETCHED },
 ///     @return **True** when to osd keyboard/numeric dialog requests a
 ///     password/pincode.
 ///     <p><hr>
-///     @skinning_v16 **[New Boolean Condition]** \link System_HasHiddenInput `System.HasHiddenInput`\endlink
-///     <p>
+///     @skinning_v16 **[New Boolean Condition]** \link System_HasHiddenInput
+///     `System.HasHiddenInput`\endlink <p>
 ///   }
 ///   \table_row3{   <b>`System.CanReboot`</b>,
 ///                  \anchor System_CanReboot
@@ -1408,6 +1415,18 @@ const infomap weather[] =        {{ "isfetched",        WEATHER_IS_FETCHED },
 ///     @return The date of build.
 ///     <p>
 ///   }
+///   \table_row3{   <b>`System.BuildVersionCode`</b>,
+///                  \anchor System_BuildVersionCode
+///                  _string_,
+///     @return The version code of build.
+///     <p>
+///   }
+///   \table_row3{   <b>`System.BuildVersionGit`</b>,
+///                  \anchor System_BuildVersionGit
+///                  _string_,
+///     @return The git version of build.
+///     <p>
+///   }
 ///   \table_row3{   <b>`System.FriendlyName`</b>,
 ///                  \anchor System_FriendlyName
 ///                  _string_,
@@ -1556,8 +1575,8 @@ const infomap weather[] =        {{ "isfetched",        WEATHER_IS_FETCHED },
 ///                  _string_,
 ///     @return The profile Kodi will auto login to.
 ///     <p><hr>
-///     @skinning_v13 **[New Infolabel]** \link System_ProfileAutoLogin `System.ProfileAutoLogin`\endlink
-///     <p>
+///     @skinning_v13 **[New Infolabel]** \link System_ProfileAutoLogin
+///     `System.ProfileAutoLogin`\endlink <p>
 ///   }
 ///   \table_row3{   <b>`System.StereoscopicMode`</b>,
 ///                  \anchor System_StereoscopicMode
@@ -1565,8 +1584,8 @@ const infomap weather[] =        {{ "isfetched",        WEATHER_IS_FETCHED },
 ///     @return The prefered stereoscopic mode.
 ///     @note Configured in settings > video > playback).
 ///     <p><hr>
-///     @skinning_v13 **[New Infolabel]** \link System_StereoscopicMode `System.StereoscopicMode`\endlink
-///     <p>
+///     @skinning_v13 **[New Infolabel]** \link System_StereoscopicMode
+///     `System.StereoscopicMode`\endlink <p>
 ///   }
 ///   \table_row3{   <b>`System.TemperatureUnits`</b>,
 ///                  \anchor System_TemperatureUnits
@@ -1612,8 +1631,8 @@ const infomap weather[] =        {{ "isfetched",        WEATHER_IS_FETCHED },
 ///     @return The version of the addon with the given id.
 ///     @param id - the addon id
 ///     <p><hr>
-///     @skinning_v13 **[New Infolabel]** \link System_AddonVersion `System.AddonVersion(id)`\endlink
-///     <p>
+///     @skinning_v13 **[New Infolabel]** \link System_AddonVersion
+///     `System.AddonVersion(id)`\endlink <p>
 ///   }
 ///   \table_row3{   <b>`System.AddonIcon(id)`</b>,
 ///                  \anchor System_AddonVersion
@@ -1642,78 +1661,80 @@ const infomap weather[] =        {{ "isfetched",        WEATHER_IS_FETCHED },
 ///                  _boolean_,
 ///     @return **True** if the system can provide CPU usage information.
 ///     <p><hr>
-///     @skinning_v19 **[New Boolean Condition]** \link  System_SupportsCPUUsage ` System.SupportsCPUUsage`\endlink
-///     <p>
+///     @skinning_v19 **[New Boolean Condition]** \link  System_SupportsCPUUsage `
+///     System.SupportsCPUUsage`\endlink <p>
 ///   }
-const infomap system_labels[] =  {{ "hasnetwork",       SYSTEM_ETHERNET_LINK_ACTIVE },
-                                  { "hasmediadvd",      SYSTEM_MEDIA_DVD },
-                                  { "hasmediaaudiocd",  SYSTEM_MEDIA_AUDIO_CD },
-                                  { "dvdready",         SYSTEM_DVDREADY },
-                                  { "trayopen",         SYSTEM_TRAYOPEN },
-                                  { "haslocks",         SYSTEM_HASLOCKS },
-                                  { "hashiddeninput",   SYSTEM_HAS_INPUT_HIDDEN },
-                                  { "hasloginscreen",   SYSTEM_HAS_LOGINSCREEN },
-                                  { "hasactivemodaldialog",   SYSTEM_HAS_ACTIVE_MODAL_DIALOG },
-                                  { "hasvisiblemodaldialog",   SYSTEM_HAS_VISIBLE_MODAL_DIALOG },
-                                  { "ismaster",         SYSTEM_ISMASTER },
-                                  { "isfullscreen",     SYSTEM_ISFULLSCREEN },
-                                  { "isstandalone",     SYSTEM_ISSTANDALONE },
-                                  { "loggedon",         SYSTEM_LOGGEDON },
-                                  { "showexitbutton",   SYSTEM_SHOW_EXIT_BUTTON },
-                                  { "canpowerdown",     SYSTEM_CAN_POWERDOWN },
-                                  { "cansuspend",       SYSTEM_CAN_SUSPEND },
-                                  { "canhibernate",     SYSTEM_CAN_HIBERNATE },
-                                  { "canreboot",        SYSTEM_CAN_REBOOT },
-                                  { "screensaveractive",SYSTEM_SCREENSAVER_ACTIVE },
-                                  { "dpmsactive",       SYSTEM_DPMS_ACTIVE },
-                                  { "cputemperature",   SYSTEM_CPU_TEMPERATURE },     // labels from here
-                                  { "cpuusage",         SYSTEM_CPU_USAGE },
-                                  { "gputemperature",   SYSTEM_GPU_TEMPERATURE },
-                                  { "fanspeed",         SYSTEM_FAN_SPEED },
-                                  { "freespace",        SYSTEM_FREE_SPACE },
-                                  { "usedspace",        SYSTEM_USED_SPACE },
-                                  { "totalspace",       SYSTEM_TOTAL_SPACE },
-                                  { "usedspacepercent", SYSTEM_USED_SPACE_PERCENT },
-                                  { "freespacepercent", SYSTEM_FREE_SPACE_PERCENT },
-                                  { "buildversion",     SYSTEM_BUILD_VERSION },
-                                  { "buildversionshort",SYSTEM_BUILD_VERSION_SHORT },
-                                  { "builddate",        SYSTEM_BUILD_DATE },
-                                  { "fps",              SYSTEM_FPS },
-                                  { "freememory",       SYSTEM_FREE_MEMORY },
-                                  { "language",         SYSTEM_LANGUAGE },
-                                  { "temperatureunits", SYSTEM_TEMPERATURE_UNITS },
-                                  { "screenmode",       SYSTEM_SCREEN_MODE },
-                                  { "screenwidth",      SYSTEM_SCREEN_WIDTH },
-                                  { "screenheight",     SYSTEM_SCREEN_HEIGHT },
-                                  { "currentwindow",    SYSTEM_CURRENT_WINDOW },
-                                  { "currentcontrol",   SYSTEM_CURRENT_CONTROL },
-                                  { "currentcontrolid", SYSTEM_CURRENT_CONTROL_ID },
-                                  { "dvdlabel",         SYSTEM_DVD_LABEL },
-                                  { "internetstate",    SYSTEM_INTERNET_STATE },
-                                  { "osversioninfo",    SYSTEM_OS_VERSION_INFO },
-                                  { "kernelversion",    SYSTEM_OS_VERSION_INFO }, // old, not correct name
-                                  { "uptime",           SYSTEM_UPTIME },
-                                  { "totaluptime",      SYSTEM_TOTALUPTIME },
-                                  { "cpufrequency",     SYSTEM_CPUFREQUENCY },
-                                  { "screenresolution", SYSTEM_SCREEN_RESOLUTION },
-                                  { "videoencoderinfo", SYSTEM_VIDEO_ENCODER_INFO },
-                                  { "profilename",      SYSTEM_PROFILENAME },
-                                  { "profilethumb",     SYSTEM_PROFILETHUMB },
-                                  { "profilecount",     SYSTEM_PROFILECOUNT },
-                                  { "profileautologin", SYSTEM_PROFILEAUTOLOGIN },
-                                  { "progressbar",      SYSTEM_PROGRESS_BAR },
-                                  { "batterylevel",     SYSTEM_BATTERY_LEVEL },
-                                  { "friendlyname",     SYSTEM_FRIENDLY_NAME },
-                                  { "alarmpos",         SYSTEM_ALARM_POS },
-                                  { "isinhibit",        SYSTEM_ISINHIBIT },
-                                  { "hasshutdown",      SYSTEM_HAS_SHUTDOWN },
-                                  { "haspvr",           SYSTEM_HAS_PVR },
-                                  { "startupwindow",    SYSTEM_STARTUP_WINDOW },
-                                  { "stereoscopicmode", SYSTEM_STEREOSCOPIC_MODE },
-                                  { "hascms",           SYSTEM_HAS_CMS },
-                                  { "privacypolicy",    SYSTEM_PRIVACY_POLICY },
-                                  { "haspvraddon",      SYSTEM_HAS_PVR_ADDON },
-                                  { "supportscpuusage", SYSTEM_SUPPORTS_CPU_USAGE }};
+const infomap system_labels[] = {{"hasnetwork", SYSTEM_ETHERNET_LINK_ACTIVE},
+                                 {"hasmediadvd", SYSTEM_MEDIA_DVD},
+                                 {"hasmediaaudiocd", SYSTEM_MEDIA_AUDIO_CD},
+                                 {"dvdready", SYSTEM_DVDREADY},
+                                 {"trayopen", SYSTEM_TRAYOPEN},
+                                 {"haslocks", SYSTEM_HASLOCKS},
+                                 {"hashiddeninput", SYSTEM_HAS_INPUT_HIDDEN},
+                                 {"hasloginscreen", SYSTEM_HAS_LOGINSCREEN},
+                                 {"hasactivemodaldialog", SYSTEM_HAS_ACTIVE_MODAL_DIALOG},
+                                 {"hasvisiblemodaldialog", SYSTEM_HAS_VISIBLE_MODAL_DIALOG},
+                                 {"ismaster", SYSTEM_ISMASTER},
+                                 {"isfullscreen", SYSTEM_ISFULLSCREEN},
+                                 {"isstandalone", SYSTEM_ISSTANDALONE},
+                                 {"loggedon", SYSTEM_LOGGEDON},
+                                 {"showexitbutton", SYSTEM_SHOW_EXIT_BUTTON},
+                                 {"canpowerdown", SYSTEM_CAN_POWERDOWN},
+                                 {"cansuspend", SYSTEM_CAN_SUSPEND},
+                                 {"canhibernate", SYSTEM_CAN_HIBERNATE},
+                                 {"canreboot", SYSTEM_CAN_REBOOT},
+                                 {"screensaveractive", SYSTEM_SCREENSAVER_ACTIVE},
+                                 {"dpmsactive", SYSTEM_DPMS_ACTIVE},
+                                 {"cputemperature", SYSTEM_CPU_TEMPERATURE}, // labels from here
+                                 {"cpuusage", SYSTEM_CPU_USAGE},
+                                 {"gputemperature", SYSTEM_GPU_TEMPERATURE},
+                                 {"fanspeed", SYSTEM_FAN_SPEED},
+                                 {"freespace", SYSTEM_FREE_SPACE},
+                                 {"usedspace", SYSTEM_USED_SPACE},
+                                 {"totalspace", SYSTEM_TOTAL_SPACE},
+                                 {"usedspacepercent", SYSTEM_USED_SPACE_PERCENT},
+                                 {"freespacepercent", SYSTEM_FREE_SPACE_PERCENT},
+                                 {"buildversion", SYSTEM_BUILD_VERSION},
+                                 {"buildversionshort", SYSTEM_BUILD_VERSION_SHORT},
+                                 {"buildversioncode", SYSTEM_BUILD_VERSION_CODE},
+                                 {"buildversiongit", SYSTEM_BUILD_VERSION_GIT},
+                                 {"builddate", SYSTEM_BUILD_DATE},
+                                 {"fps", SYSTEM_FPS},
+                                 {"freememory", SYSTEM_FREE_MEMORY},
+                                 {"language", SYSTEM_LANGUAGE},
+                                 {"temperatureunits", SYSTEM_TEMPERATURE_UNITS},
+                                 {"screenmode", SYSTEM_SCREEN_MODE},
+                                 {"screenwidth", SYSTEM_SCREEN_WIDTH},
+                                 {"screenheight", SYSTEM_SCREEN_HEIGHT},
+                                 {"currentwindow", SYSTEM_CURRENT_WINDOW},
+                                 {"currentcontrol", SYSTEM_CURRENT_CONTROL},
+                                 {"currentcontrolid", SYSTEM_CURRENT_CONTROL_ID},
+                                 {"dvdlabel", SYSTEM_DVD_LABEL},
+                                 {"internetstate", SYSTEM_INTERNET_STATE},
+                                 {"osversioninfo", SYSTEM_OS_VERSION_INFO},
+                                 {"kernelversion", SYSTEM_OS_VERSION_INFO}, // old, not correct name
+                                 {"uptime", SYSTEM_UPTIME},
+                                 {"totaluptime", SYSTEM_TOTALUPTIME},
+                                 {"cpufrequency", SYSTEM_CPUFREQUENCY},
+                                 {"screenresolution", SYSTEM_SCREEN_RESOLUTION},
+                                 {"videoencoderinfo", SYSTEM_VIDEO_ENCODER_INFO},
+                                 {"profilename", SYSTEM_PROFILENAME},
+                                 {"profilethumb", SYSTEM_PROFILETHUMB},
+                                 {"profilecount", SYSTEM_PROFILECOUNT},
+                                 {"profileautologin", SYSTEM_PROFILEAUTOLOGIN},
+                                 {"progressbar", SYSTEM_PROGRESS_BAR},
+                                 {"batterylevel", SYSTEM_BATTERY_LEVEL},
+                                 {"friendlyname", SYSTEM_FRIENDLY_NAME},
+                                 {"alarmpos", SYSTEM_ALARM_POS},
+                                 {"isinhibit", SYSTEM_ISINHIBIT},
+                                 {"hasshutdown", SYSTEM_HAS_SHUTDOWN},
+                                 {"haspvr", SYSTEM_HAS_PVR},
+                                 {"startupwindow", SYSTEM_STARTUP_WINDOW},
+                                 {"stereoscopicmode", SYSTEM_STEREOSCOPIC_MODE},
+                                 {"hascms", SYSTEM_HAS_CMS},
+                                 {"privacypolicy", SYSTEM_PRIVACY_POLICY},
+                                 {"haspvraddon", SYSTEM_HAS_PVR_ADDON},
+                                 {"supportscpuusage", SYSTEM_SUPPORTS_CPU_USAGE}};
 
 /// \page modules__infolabels_boolean_conditions
 ///   \table_row3{   <b>`System.HasAddon(id)`</b>,
@@ -5545,6 +5566,7 @@ const infomap container_str[]  = {{ "property",         CONTAINER_PROPERTY },
 ///                  _string_,
 ///     @return The video codec of the currently selected video. Common values:
 ///      - <b>3iv2</b>
+///      - <b>av1</b>
 ///      - <b>avc1</b>
 ///      - <b>div2</b>
 ///      - <b>div3</b>
@@ -6384,6 +6406,8 @@ const infomap container_str[]  = {{ "property",         CONTAINER_PROPERTY },
 ///     @return The BPM of a song.
 ///     <p><hr>
 ///     @skinning_v19 **[New Infolabel]** \link ListItem_BPM `ListItem.BPM`\endlink
+///     <p>
+///   }
 ///   \table_row3{   <b>`ListItem.UniqueID(name)`</b>,
 ///                  \anchor ListItem_UniqueID
 ///                  _string_,
@@ -6397,18 +6421,20 @@ const infomap container_str[]  = {{ "property",         CONTAINER_PROPERTY },
 ///   \table_row3{   <b>`ListItem.BitRate`</b>,
 ///                  \anchor ListItem_BitRate
 ///                  _string_,
-///     @return The bitrate of a song. Actual rate for CBR, average rate for VBR.
+///     @return The bitrate of a song. Actual rate for CBR\, average rate for VBR.
 ///     <p><hr>
 ///     @skinning_v19 **[New Infolabel]** \link ListItem_BitRate `ListItem.BitRate`\endlink
 ///     <p>
-///   }///   \table_row3{   <b>`ListItem.SampleRate`</b>,
+///   }
+///   \table_row3{   <b>`ListItem.SampleRate`</b>,
 ///                  \anchor ListItem_SampleRate
 ///                  _string_,
-///     @return The sample rate of a song / 1000.0 eg 44.1, 48, 96 etc.
+///     @return The sample rate of a song / 1000.0 eg 44.1\, 48\, 96 etc.
 ///     <p><hr>
 ///     @skinning_v19 **[New Infolabel]** \link ListItem_SampleRate `ListItem.SampleRate`\endlink
 ///     <p>
-///   }///   \table_row3{   <b>`ListItem.MusicChannels`</b>,
+///   }
+///   \table_row3{   <b>`ListItem.MusicChannels`</b>,
 ///                  \anchor ListItem_MusicChannels
 ///                  _string_,
 ///     @return The number of audio channels of a song.
@@ -6422,6 +6448,14 @@ const infomap container_str[]  = {{ "property",         CONTAINER_PROPERTY },
 ///     @return The database id of the TvShow for the currently selected Season or Episode.
 ///     <p><hr>
 ///     @skinning_v19 **[New Infolabel]** \link ListItem_TvShowDBID `ListItem.TvShowDBID`\endlink
+///     <p>
+///   }
+///   \table_row3{   <b>`ListItem.AlbumStatus`</b>,
+///                  \anchor ListItem_AlbumStatus
+///                  _string_,
+///     @return The Musicbrainz release status of the album (offical, bootleg, promotion etc)
+///     <p><hr>
+///     @skinning_v19 **[New Infolabel]** \link ListItem_AlbumStatus `ListItem.AlbumStatus`\endlink
 ///     <p>
 ///   }
 /// \table_end
@@ -6631,6 +6665,7 @@ const infomap listitem_labels[]= {{ "thumb",            LISTITEM_THUMB },
                                   { "isfinale",         LISTITEM_IS_FINALE },
                                   { "islive",           LISTITEM_IS_LIVE },
                                   { "tvshowdbid",       LISTITEM_TVSHOWDBID },
+                                  { "albumstatus",      LISTITEM_ALBUMSTATUS },
 };
 
 /// \page modules__infolabels_boolean_conditions

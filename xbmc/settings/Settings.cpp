@@ -188,6 +188,7 @@ const std::string CSettings::SETTING_PVRMANAGER_PRESELECTPLAYINGCHANNEL = "pvrma
 const std::string CSettings::SETTING_PVRMANAGER_SYNCCHANNELGROUPS = "pvrmanager.syncchannelgroups";
 const std::string CSettings::SETTING_PVRMANAGER_BACKENDCHANNELORDER = "pvrmanager.backendchannelorder";
 const std::string CSettings::SETTING_PVRMANAGER_USEBACKENDCHANNELNUMBERS = "pvrmanager.usebackendchannelnumbers";
+const std::string CSettings::SETTING_PVRMANAGER_USEBACKENDCHANNELNUMBERSALWAYS = "pvrmanager.usebackendchannelnumbersalways";
 const std::string CSettings::SETTING_PVRMANAGER_STARTGROUPCHANNELNUMBERSFROMONE = "pvrmanager.startgroupchannelnumbersfromone";
 const std::string CSettings::SETTING_PVRMANAGER_CLIENTPRIORITIES = "pvrmanager.clientpriorities";
 const std::string CSettings::SETTING_PVRMANAGER_CHANNELMANAGER = "pvrmanager.channelmanager";
@@ -300,6 +301,8 @@ const std::string CSettings::SETTING_SERVICES_UPNPCONTROLLER = "services.upnpcon
 const std::string CSettings::SETTING_SERVICES_UPNPRENDERER = "services.upnprenderer";
 const std::string CSettings::SETTING_SERVICES_WEBSERVER = "services.webserver";
 const std::string CSettings::SETTING_SERVICES_WEBSERVERPORT = "services.webserverport";
+const std::string CSettings::SETTING_SERVICES_WEBSERVERAUTHENTICATION =
+    "services.webserverauthentication";
 const std::string CSettings::SETTING_SERVICES_WEBSERVERUSERNAME = "services.webserverusername";
 const std::string CSettings::SETTING_SERVICES_WEBSERVERPASSWORD = "services.webserverpassword";
 const std::string CSettings::SETTING_SERVICES_WEBSERVERSSL = "services.webserverssl";

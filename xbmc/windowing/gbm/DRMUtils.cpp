@@ -594,13 +594,16 @@ bool CDRMUtils::OpenDrm(bool needConnector)
     "radeon",
     "nouveau",
     "vmwgfx",
+    "exynos",
     "msm",
     "imx-drm",
     "rockchip",
     "vc4",
     "virtio_gpu",
+    "mediatek",
+    "meson",
     "sun4i-drm",
-    "meson"
+    "vboxvideo",
   };
 
   for (auto module : modules)
@@ -789,6 +792,8 @@ void CDRMUtils::DestroyDrm()
 
   for (auto crtc : m_crtcs)
   {
+    if (!crtc)
+      continue;
     drmModeFreeCrtc(crtc->crtc);
     FreeProperties(crtc);
     delete crtc;

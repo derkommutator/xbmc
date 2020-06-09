@@ -135,7 +135,6 @@
 
 #include "video/dialogs/GUIDialogFullScreenInfo.h"
 #include "dialogs/GUIDialogCache.h"
-#include "dialogs/GUIDialogPlayEject.h"
 #include "utils/URIUtils.h"
 #include "utils/XMLUtils.h"
 #include "addons/AddonInstaller.h"
@@ -2805,20 +2804,7 @@ bool CApplication::PlayFile(CFileItem item, const std::string& player, bool bRes
 
   if (item.IsDiscStub())
   {
-#ifdef HAS_DVD_DRIVE
-    // Display the Play Eject dialog if there is any optical disc drive
-    if (CServiceBroker::GetMediaManager().HasOpticalDrive())
-    {
-      if (CGUIDialogPlayEject::ShowAndGetInput(item))
-        // PlayDiscAskResume takes path to disc. No parameter means default DVD drive.
-        // Can't do better as CGUIDialogPlayEject calls CMediaManager::IsDiscInDrive, which assumes default DVD drive anyway
-        return MEDIA_DETECT::CAutorun::PlayDiscAskResume();
-    }
-    else
-#endif
-      HELPERS::ShowOKDialogText(CVariant{435}, CVariant{436});
-
-    return true;
+    return CServiceBroker::GetMediaManager().playStubFile(item);
   }
 
   if (item.IsPlayList())
@@ -3193,7 +3179,7 @@ void CApplication::OnQueueNextItem()
   // informs python script currently running that we are requesting the next track
   // (does nothing if python is not loaded)
 #ifdef HAS_PYTHON
-  g_pythonParser.OnQueueNextItem(); // currently unimplemented
+  CServiceBroker::GetXBPython().OnQueueNextItem(); // currently unimplemented
 #endif
 
   CGUIMessage msg(GUI_MSG_QUEUE_NEXT_ITEM, 0, 0);
@@ -3226,7 +3212,7 @@ void CApplication::OnPlayBackError()
 void CApplication::OnPlayBackPaused()
 {
 #ifdef HAS_PYTHON
-  g_pythonParser.OnPlayBackPaused();
+  CServiceBroker::GetXBPython().OnPlayBackPaused();
 #endif
 
   CVariant param;
@@ -3238,7 +3224,7 @@ void CApplication::OnPlayBackPaused()
 void CApplication::OnPlayBackResumed()
 {
 #ifdef HAS_PYTHON
-  g_pythonParser.OnPlayBackResumed();
+  CServiceBroker::GetXBPython().OnPlayBackResumed();
 #endif
 
   CVariant param;
@@ -3250,7 +3236,7 @@ void CApplication::OnPlayBackResumed()
 void CApplication::OnPlayBackSpeedChanged(int iSpeed)
 {
 #ifdef HAS_PYTHON
-  g_pythonParser.OnPlayBackSpeedChanged(iSpeed);
+  CServiceBroker::GetXBPython().OnPlayBackSpeedChanged(iSpeed);
 #endif
 
   CVariant param;
@@ -3262,7 +3248,8 @@ void CApplication::OnPlayBackSpeedChanged(int iSpeed)
 void CApplication::OnPlayBackSeek(int64_t iTime, int64_t seekOffset)
 {
 #ifdef HAS_PYTHON
-  g_pythonParser.OnPlayBackSeek(static_cast<int>(iTime), static_cast<int>(seekOffset));
+  CServiceBroker::GetXBPython().OnPlayBackSeek(static_cast<int>(iTime),
+                                               static_cast<int>(seekOffset));
 #endif
 
   CVariant param;
@@ -3277,7 +3264,7 @@ void CApplication::OnPlayBackSeek(int64_t iTime, int64_t seekOffset)
 void CApplication::OnPlayBackSeekChapter(int iChapter)
 {
 #ifdef HAS_PYTHON
-  g_pythonParser.OnPlayBackSeekChapter(iChapter);
+  CServiceBroker::GetXBPython().OnPlayBackSeekChapter(iChapter);
 #endif
 }
 
@@ -3862,7 +3849,7 @@ bool CApplication::OnMessage(CGUIMessage& message)
 #ifdef HAS_PYTHON
       // informs python script currently running playback has started
       // (does nothing if python is not loaded)
-      g_pythonParser.OnPlayBackStarted(*m_itemCurrentFile);
+      CServiceBroker::GetXBPython().OnPlayBackStarted(*m_itemCurrentFile);
 #endif
 
       CVariant param;
@@ -3946,7 +3933,7 @@ bool CApplication::OnMessage(CGUIMessage& message)
     CServiceBroker::GetGUI()->GetInfoManager().ResetCurrentItem();
     PlaybackCleanup();
 #ifdef HAS_PYTHON
-    g_pythonParser.OnPlayBackStopped();
+    CServiceBroker::GetXBPython().OnPlayBackStopped();
 #endif
      return true;
 
@@ -3965,7 +3952,7 @@ bool CApplication::OnMessage(CGUIMessage& message)
     PlaybackCleanup();
 
 #ifdef HAS_PYTHON
-      g_pythonParser.OnPlayBackEnded();
+    CServiceBroker::GetXBPython().OnPlayBackEnded();
 #endif
     return true;
 
@@ -3982,7 +3969,7 @@ bool CApplication::OnMessage(CGUIMessage& message)
 #ifdef HAS_PYTHON
     // informs python script currently running playback has started
     // (does nothing if python is not loaded)
-    g_pythonParser.OnAVStarted(*m_itemCurrentFile);
+    CServiceBroker::GetXBPython().OnAVStarted(*m_itemCurrentFile);
 #endif
     return true;
 
@@ -3990,7 +3977,7 @@ bool CApplication::OnMessage(CGUIMessage& message)
 #ifdef HAS_PYTHON
     // informs python script currently running playback has started
     // (does nothing if python is not loaded)
-    g_pythonParser.OnAVChange();
+    CServiceBroker::GetXBPython().OnAVChange();
 #endif
       return true;
 
@@ -4598,10 +4585,8 @@ void CApplication::SeekPercentage(float percent)
 // SwitchToFullScreen() returns true if a switch is made, else returns false
 bool CApplication::SwitchToFullScreen(bool force /* = false */)
 {
-  const int activeWindowID = CServiceBroker::GetGUI()->GetWindowManager().GetActiveWindow();
-
   // don't switch if the slideshow is active
-  if (activeWindowID == WINDOW_SLIDESHOW)
+  if (CServiceBroker::GetGUI()->GetWindowManager().IsWindowActive(WINDOW_SLIDESHOW))
     return false;
 
   // if playing from the video info window, close it first!
@@ -4629,6 +4614,7 @@ bool CApplication::SwitchToFullScreen(bool force /* = false */)
       pDialog->Close(true);
   }
 
+  const int activeWindowID = CServiceBroker::GetGUI()->GetWindowManager().GetActiveWindow();
   int windowID = WINDOW_INVALID;
 
   // See if we're playing a game

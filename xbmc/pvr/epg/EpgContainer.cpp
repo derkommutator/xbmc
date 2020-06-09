@@ -269,27 +269,53 @@ void CPVREpgContainer::LoadFromDB()
 
 bool CPVREpgContainer::PersistAll(unsigned int iMaxTimeslice) const
 {
+  const std::shared_ptr<CPVREpgDatabase> database = GetEpgDatabase();
+  if (!database)
+  {
+    CLog::LogF(LOGERROR, "No EPG database");
+    return false;
+  }
+
+  std::vector<std::shared_ptr<CPVREpg>> changedEpgs;
+  {
+    CSingleLock lock(m_critSection);
+    for (const auto& epg : m_epgIdToEpgMap)
+    {
+      if (epg.second && epg.second->NeedsSave())
+      {
+        // Note: We need to obtain a lock for every epg instance before we can lock
+        //       the epg db. This order is important. Otherwise deadlocks may occure.
+        epg.second->Lock();
+        changedEpgs.emplace_back(epg.second);
+      }
+    }
+  }
+
   bool bReturn = true;
 
-  m_critSection.lock();
-  const auto epgs = m_epgIdToEpgMap;
-  m_critSection.unlock();
-
-  const std::shared_ptr<CPVREpgDatabase> database = GetEpgDatabase();
-  XbmcThreads::EndTime processTimeslice(iMaxTimeslice);
-
-  for (const auto& epg : epgs)
+  if (!changedEpgs.empty())
   {
-    if (epg.second && epg.second->NeedsSave())
-    {
-      CLog::Log(LOGDEBUG, "EPG Container: Persisting events for channel '%s'...",
-                epg.second->GetChannelData()->ChannelName().c_str());
+    // Note: We must lock the db the whole time, otherwise races may occure.
+    database->Lock();
 
-      bReturn &= epg.second->Persist(database);
+    XbmcThreads::EndTime processTimeslice(iMaxTimeslice);
+    for (const auto& epg : changedEpgs)
+    {
+      if (!processTimeslice.IsTimePast())
+      {
+        CLog::Log(LOGDEBUG, "EPG Container: Persisting events for channel '%s'...",
+                  epg->GetChannelData()->ChannelName().c_str());
+
+        bReturn &= epg->Persist(database, true);
+      }
+
+      epg->Unlock();
     }
 
-    if (processTimeslice.IsTimePast())
-      break;
+    if (bReturn)
+      database->CommitInsertQueries();
+
+    database->Unlock();
   }
 
   return bReturn;
@@ -309,7 +335,7 @@ void CPVREpgContainer::Process()
     CDateTime::GetCurrentDateTime().GetAsUTCDateTime().GetAsTime(iNow);
     {
       CSingleLock lock(m_critSection);
-      bUpdateEpg = (iNow >= m_iNextEpgUpdate);
+      bUpdateEpg = (iNow >= m_iNextEpgUpdate) && !m_bSuspended;
     }
 
     /* update the EPG */
@@ -317,12 +343,15 @@ void CPVREpgContainer::Process()
       m_bIsInitialising = false;
 
     /* clean up old entries */
-    if (!m_bStop && iNow >= m_iLastEpgCleanup + CServiceBroker::GetSettingsComponent()->GetAdvancedSettings()->m_iEpgCleanupInterval)
+    if (!m_bStop && !m_bSuspended &&
+        iNow >= m_iLastEpgCleanup + CServiceBroker::GetSettingsComponent()
+                                        ->GetAdvancedSettings()
+                                        ->m_iEpgCleanupInterval)
       RemoveOldEntries();
 
     /* check for pending manual EPG updates */
 
-    while (!m_bStop)
+    while (!m_bStop && !m_bSuspended)
     {
       CEpgUpdateRequest request;
       {
@@ -341,7 +370,7 @@ void CPVREpgContainer::Process()
     /* check for pending EPG tag changes */
 
     // during Kodi startup, addons may push updates very early, even before EPGs are ready to use.
-    if (!m_bStop && CServiceBroker::GetPVRManager().EpgsCreated())
+    if (!m_bStop && !m_bSuspended && CServiceBroker::GetPVRManager().EpgsCreated())
     {
       unsigned int iProcessed = 0;
       XbmcThreads::EndTime processTimeslice(1000); // max 1 sec per cycle, regardless of how many events are in the queue
@@ -370,7 +399,7 @@ void CPVREpgContainer::Process()
       }
     }
 
-    if (!m_bStop)
+    if (!m_bStop && !m_bSuspended)
     {
       {
         CSingleLock lock(m_critSection);
@@ -832,6 +861,16 @@ void CPVREpgContainer::OnPlaybackStopped()
 {
   CSingleLock lock(m_critSection);
   m_bPlaying = false;
+}
+
+void CPVREpgContainer::OnSystemSleep()
+{
+  m_bSuspended = true;
+}
+
+void CPVREpgContainer::OnSystemWake()
+{
+  m_bSuspended = false;
 }
 
 } // namespace PVR
